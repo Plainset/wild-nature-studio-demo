@@ -1,0 +1,854 @@
+/* Wild Nature Studio — shared stylesheet
+   Palette drawn from the studio's own branding: the deep olive/forest green
+   of their logo mark, warm museum-case oak and brass, aged parchment cream,
+   and near-black ink brown for text — evoking a natural-history-museum
+   field journal rather than a generic "nature" green. */
+
+@view-transition {
+  navigation: auto;
+}
+
+:root {
+  --forest: oklch(0.4 0.055 140);
+  --forest-deep: oklch(0.26 0.045 140);
+  --forest-pale: oklch(0.93 0.025 140);
+  --brass: oklch(0.72 0.115 75);
+  --brass-deep: oklch(0.46 0.115 62);
+  --oak: oklch(0.32 0.04 55);
+  --parchment: oklch(0.96 0.018 80);
+  --parchment-deep: oklch(0.91 0.025 78);
+  --ink: oklch(0.22 0.018 50);
+  --ink-soft: oklch(0.42 0.02 50);
+  --white: oklch(1 0 0);
+
+  --radius-lg: 1.25rem;
+  --radius-md: 0.85rem;
+  --radius-sm: 0.5rem;
+  --shadow-soft: 0 1.5rem 3rem -1.5rem oklch(0.22 0.018 50 / 0.45);
+  --max-width: 74rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  background: var(--parchment);
+  color: var(--ink);
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Spectral", "Iowan Old Style", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5em;
+  color: var(--forest-deep);
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+figure {
+  margin: 0;
+}
+
+::selection {
+  background: var(--brass);
+  color: var(--forest-deep);
+}
+
+/* thin custom scrollbars on internally-scrolling elements */
+.h-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--brass-deep) transparent;
+}
+.h-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+.h-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.h-scroll::-webkit-scrollbar-thumb {
+  background: var(--brass-deep);
+  border-radius: 999px;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: "Inter", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--brass-deep);
+  margin-bottom: 0.75rem;
+}
+
+/* ---------- Header / nav ---------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in oklch, var(--parchment) 92%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--parchment-deep);
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.5rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: "Spectral", Georgia, serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--forest-deep);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.brand .brand-mark {
+  color: var(--brass-deep);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  padding: 0.35rem 0.1rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a[aria-current="page"] {
+  color: var(--forest-deep);
+  border-bottom-color: var(--brass);
+}
+
+.nav-cta {
+  background: var(--forest-deep);
+  color: var(--white) !important;
+  padding: 0.55rem 1.1rem !important;
+  border-radius: 999px;
+  border-bottom: none !important;
+}
+
+.nav-cta:hover {
+  background: var(--forest);
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0.4rem;
+  cursor: pointer;
+  color: var(--forest-deep);
+}
+
+.nav-toggle svg {
+  width: 26px;
+  height: 26px;
+}
+
+@media (max-width: 860px) {
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--parchment);
+    border-bottom: 1px solid var(--parchment-deep);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+
+  .nav-links[data-open="true"] {
+    max-height: 24rem;
+  }
+
+  .nav-links li {
+    border-top: 1px solid var(--parchment-deep);
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 0.9rem 1.5rem;
+    border-bottom: none;
+  }
+
+  .nav-cta {
+    margin: 0.75rem 1.5rem;
+    text-align: center;
+  }
+}
+
+/* ---------- Buttons ---------- */
+
+.btn-wrap {
+  display: inline-block;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: 1.5px solid transparent;
+  transition: transform 0.18s ease, background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--forest-deep);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--forest);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--forest-deep);
+  border-color: var(--forest-deep);
+}
+
+.btn-ghost:hover {
+  background: var(--forest-deep);
+  color: var(--white);
+}
+
+/* Ghost button on a dark photo background (e.g. the hero) needs light
+   text/border instead of the default dark-on-transparent styling, which
+   is illegible over a dark image. */
+.btn-ghost-light {
+  background: oklch(0.1 0.02 50 / 0.7);
+  color: var(--white);
+  border-color: color-mix(in oklch, var(--white) 70%, transparent);
+  backdrop-filter: blur(4px);
+  text-shadow: 0 0.1rem 0.4rem oklch(0.1 0 0 / 0.6);
+}
+
+.btn-ghost-light:hover {
+  background: var(--white);
+  color: var(--forest-deep);
+  border-color: var(--white);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  align-items: flex-end;
+  color: var(--white);
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+      in oklch to top,
+      oklch(0.1 0.02 50 / 0.96) 0%,
+      oklch(0.13 0.02 50 / 0.72) 38%,
+      oklch(0.18 0.03 60 / 0.25) 72%
+    ),
+    url("../img/hero-diorama.jpg");
+  background-size: cover;
+  background-position: center 30%;
+}
+
+.hero-content {
+  position: relative;
+  padding: 6rem 0 3.5rem;
+  max-width: 46rem;
+}
+
+.hero h1 {
+  color: var(--white);
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  line-height: 1.08;
+  margin-bottom: 0.7rem;
+  text-shadow: 0 0.15rem 1.25rem oklch(0.1 0 0 / 0.55);
+}
+
+.hero-lede {
+  font-size: 1.15rem;
+  color: oklch(0.96 0.01 80 / 0.92);
+  max-width: 38rem;
+  text-shadow: 0 0.1rem 0.8rem oklch(0.1 0 0 / 0.55);
+}
+
+.hero-tag {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--white);
+  background: oklch(0.12 0.02 50 / 0.82);
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+
+/* ---------- Sections ---------- */
+
+section.container,
+.section-block {
+  padding: 4.5rem 1.5rem;
+}
+
+.section-heading {
+  max-width: 42rem;
+  margin-bottom: 2.5rem;
+}
+
+.section-heading.align-center {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.lede {
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+}
+
+/* reveal-on-scroll */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(1.1rem);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Story / about split ---------- */
+
+.split-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.split-grid.reverse {
+  grid-template-columns: 0.95fr 1.05fr;
+}
+
+.split-grid.reverse .photo-frame {
+  order: -1;
+}
+
+@media (max-width: 860px) {
+  .split-grid,
+  .split-grid.reverse {
+    grid-template-columns: 1fr;
+  }
+  .split-grid.reverse .photo-frame {
+    order: 0;
+  }
+}
+
+.photo-frame {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  aspect-ratio: 4 / 3;
+}
+
+.photo-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.7rem 1rem;
+  font-size: 0.82rem;
+  color: var(--white);
+  background: linear-gradient(in oklch to top, oklch(0.12 0.02 50 / 0.85), transparent);
+}
+
+.stat-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 1.75rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--parchment-deep);
+}
+
+.stat {
+  min-width: 8rem;
+}
+
+.stat b {
+  display: block;
+  font-family: "Spectral", Georgia, serif;
+  font-size: 1.9rem;
+  color: var(--forest-deep);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat span {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+/* ---------- Team cards ---------- */
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: subgrid;
+  gap: 2rem;
+}
+
+@media (max-width: 720px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.team-card {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
+  gap: 0;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  min-width: 0;
+}
+
+.team-card .photo-frame {
+  border-radius: 0;
+  box-shadow: none;
+  aspect-ratio: 5 / 4;
+}
+
+.team-card-body {
+  padding: 1.5rem 1.6rem 1.8rem;
+  min-width: 0;
+}
+
+.team-card-body h3 {
+  margin-bottom: 0.1rem;
+}
+
+.team-role {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--brass-deep);
+  margin-bottom: 0.8rem;
+}
+
+.team-card-body p {
+  color: var(--ink-soft);
+  font-size: 0.96rem;
+}
+
+/* ---------- Service / craft cards ---------- */
+
+.craft-section {
+  padding: 4.5rem 0;
+  border-top: 1px solid var(--parchment-deep);
+}
+
+.craft-section:first-of-type {
+  border-top: none;
+}
+
+.craft-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (max-width: 860px) {
+  .craft-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.craft-grid .photo-frame {
+  aspect-ratio: 4 / 3;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1.25rem;
+}
+
+.tag-list li {
+  list-style: none;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  background: var(--forest-pale);
+  color: var(--forest-deep);
+  min-width: 0;
+}
+
+.photo-collage {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.photo-collage .photo-frame {
+  border-radius: 0;
+  box-shadow: none;
+  aspect-ratio: 1;
+}
+
+/* ---------- Gallery strip ---------- */
+
+.gallery-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 720px) {
+  .gallery-strip {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.gallery-item {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  aspect-ratio: 4 / 3;
+  position: relative;
+  min-width: 0;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+.gallery-item figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--white);
+  background: linear-gradient(in oklch to top, oklch(0.12 0.02 50 / 0.82), transparent);
+}
+
+/* ---------- Quote / testimonial style block ---------- */
+
+.quote-block {
+  background: var(--forest-deep);
+  color: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 2.75rem;
+  position: relative;
+}
+
+.quote-block p {
+  font-family: "Spectral", Georgia, serif;
+  font-size: 1.35rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.quote-block cite {
+  font-style: normal;
+  font-size: 0.9rem;
+  color: oklch(0.9 0.02 80 / 0.85);
+}
+
+/* ---------- CTA band ---------- */
+
+.cta-band {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  background: var(--forest-deep);
+  color: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 2.75rem;
+}
+
+.cta-band h2 {
+  color: var(--white);
+  margin-bottom: 0.35rem;
+}
+
+.cta-band p {
+  color: oklch(0.94 0.01 80 / 0.85);
+  margin-bottom: 0;
+}
+
+.cta-band .btn-primary {
+  background: var(--brass);
+  color: var(--forest-deep);
+}
+
+.cta-band .btn-primary:hover {
+  background: var(--brass-deep);
+  color: var(--white);
+}
+
+/* ---------- Contact page ---------- */
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 780px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.info-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-soft);
+  min-width: 0;
+}
+
+.info-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.info-list li {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.info-icon {
+  font-size: 1.3rem;
+  line-height: 1.4;
+  flex-shrink: 0;
+}
+
+.info-list > li > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.info-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brass-deep);
+  margin-bottom: 0.2rem;
+}
+
+.info-list a {
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--forest-deep);
+  border-bottom: 1px solid transparent;
+}
+
+.info-list a:hover {
+  border-bottom-color: var(--forest-deep);
+}
+
+.enquiry-note {
+  background: var(--forest-pale);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  font-size: 0.95rem;
+  color: var(--forest-deep);
+  min-height: 3rem;
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  background: var(--oak);
+  color: oklch(0.92 0.015 75);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 2.5rem;
+  padding: 3.5rem 1.5rem 2rem;
+}
+
+@media (max-width: 720px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.site-footer h4 {
+  color: var(--white);
+  font-size: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.site-footer p,
+.site-footer li {
+  color: oklch(0.86 0.015 75);
+  font-size: 0.92rem;
+}
+
+.site-footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.site-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 1.25rem 1.5rem 1.75rem;
+  border-top: 1px solid oklch(0.4 0.03 55);
+  font-size: 0.82rem;
+  color: oklch(0.75 0.015 75);
+}
